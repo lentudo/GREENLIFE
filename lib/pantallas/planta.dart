@@ -29,14 +29,44 @@ class _AgregarPlantaScreenState extends State<AgregarPlantaScreen> {
   // Seleccionar imagen
   Future<void> _seleccionarImagen() async {
     final picker = ImagePicker();
-    // Muestra diálogo para elegir cámara o galería
-    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _imagenSeleccionada = File(pickedFile.path);
-      });
-    }
+    
+    await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Galería'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                  if (pickedFile != null) {
+                    setState(() {
+                      _imagenSeleccionada = File(pickedFile.path);
+                    });
+                  }
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_camera),
+                title: const Text('Cámara'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  final XFile? pickedFile = await picker.pickImage(source: ImageSource.camera);
+                  if (pickedFile != null) {
+                    setState(() {
+                      _imagenSeleccionada = File(pickedFile.path);
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   // Guardar en Firebase

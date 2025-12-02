@@ -5,6 +5,7 @@ import '../services/db_servicio.dart';
 import '../models/planta_model.dart';
 import 'details_planta.dart';
 import 'planta.dart';
+import 'buscar_viveros.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -25,6 +26,67 @@ class HomeScreen extends StatelessWidget {
             onPressed: () => _auth.signOut(),
           )
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.green,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'GreenLife',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Menú Principal',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Mis Plantas'),
+              onTap: () {
+                Navigator.pop(context); // Cierra el drawer
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.store),
+              title: const Text('Buscar Viveros'),
+              onTap: () {
+                Navigator.pop(context); // Cierra el drawer antes de navegar
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const BuscarViverosScreen()),
+                );
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text('Cerrar Sesión', style: TextStyle(color: Colors.red)),
+              onTap: () {
+                Navigator.pop(context);
+                _auth.signOut();
+              },
+            ),
+          ],
+        ),
       ),
       // BOTÓN FLOTANTE PARA AGREGAR
       floatingActionButton: FloatingActionButton(
