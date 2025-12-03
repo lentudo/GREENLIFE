@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart'; // Necesario para nombres únicos de fotos
 import '../models/planta_model.dart';
+import '../models/usuario_model.dart';
 
 class DBService {
   // Instancias de Firebase
@@ -86,6 +87,59 @@ class DBService {
     } catch (e) {
       print("Error obteniendo comunidad: $e");
       return [];
+    }
+  }
+  // -------------------------
+  // 5. OBTENER TODOS LOS USUARIOS (Admin)
+  // -------------------------
+  Future<List<UsuarioModel>> obtenerTodosLosUsuarios() async {
+    try {
+      // NOTA: Quitamos el orderBy('creadoEn') de la query para evitar
+      // tener que crear un índice compuesto en Firebase Console.
+      // Ordenaremos la lista en memoria (Dart) después de recibirla.
+      QuerySnapshot snapshot = await _firestore
+          .collection('users')
+          .where('rol', isEqualTo: 'user')
+          // .orderBy('creadoEn', descending: true) // REMOVED
+          .get();
+
+      List<UsuarioModel> usuarios = snapshot.docs.map((doc) {
+        return UsuarioModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+      }).toList();
+
+      // Ordenar en memoria: más recientes primero
+      usuarios.sort((a, b) => b.creadoEn.compareTo(a.creadoEn));
+
+      return usuarios;
+    } catch (e) {
+      print("Error obteniendo usuarios: $e");
+      return [];
+    }
+  }
+
+  // -------------------------
+  // 6. ELIMINAR USUARIO (Admin)
+  // -------------------------
+  Future<bool> eliminarUsuario(String uid) async {
+    try {
+      await _firestore.collection('users').doc(uid).delete();
+      return true;
+    } catch (e) {
+      print("Error eliminando usuario: $e");
+      return false;
+    }
+  }
+
+  // -------------------------
+  // 7. ELIMINAR PLANTA (Admin)
+  // -------------------------
+  Future<bool> eliminarPlanta(String id) async {
+    try {
+      await _firestore.collection('plantas').doc(id).delete();
+      return true;
+    } catch (e) {
+      print("Error eliminando planta: $e");
+      return false;
     }
   }
 }
