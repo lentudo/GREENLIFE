@@ -7,6 +7,10 @@ import 'details_planta.dart';
 import 'planta.dart';
 import 'buscar_viveros.dart';
 
+import 'nivelador.dart';
+
+
+
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
@@ -73,6 +77,17 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const BuscarViverosScreen()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.water_drop),
+              title: const Text('Nivelador de Maceta'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NiveladorScreen()),
                 );
               },
             ),
