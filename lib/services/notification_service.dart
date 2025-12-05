@@ -44,16 +44,13 @@ class NotificationService {
     // 2. Permisos FCM
     await _fcm.requestPermission();
 
-    // 3. ¡CORRECCIÓN IMPORTANTE!
-    // Escuchamos los cambios de sesión.
-    // Si el usuario inicia sesión (user != null), guardamos el token inmediatamente.
+   
     _auth.authStateChanges().listen((User? user) {
       if (user != null) {
         _saveDeviceToken();
       }
     });
 
-    // También intentamos guardar si ya había una sesión activa al abrir la app
     if (_auth.currentUser != null) {
       await _saveDeviceToken();
     }
@@ -70,10 +67,9 @@ class NotificationService {
       final userId = _auth.currentUser?.uid;
 
       if (userId != null && token != null) {
-        // Usamos el nombre exacto que tienes en tu BD: 'tokenNotificacion'
         await _db.collection('users').doc(userId).update({
           'tokenNotificacion': token,
-        }); // Usamos update para no borrar otros campos por accidente
+        }); 
 
         print('✅ Token guardado en campo tokenNotificacion para: $userId');
       }
@@ -82,7 +78,7 @@ class NotificationService {
     }
   }
 
-  // --- RESTO DE LÓGICA (Igual que antes) ---
+  
 
   void _setupFCMListeners() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -123,8 +119,8 @@ class NotificationService {
     required DateTime scheduleTime,
   }) async {
 
-    // CORRECCIÓN: Convertimos la fecha a UTC para evitar errores de zona horaria.
-    // Esto asegura que "dentro de 10 segundos" sea REALMENTE dentro de 10 segundos.
+    
+
     final tz.TZDateTime scheduledDate = tz.TZDateTime.from(
       scheduleTime.toUtc(),
       tz.UTC,
@@ -137,12 +133,12 @@ class NotificationService {
       scheduledDate,
       const NotificationDetails(
         android: AndroidNotificationDetails(
-          'plant_care_channel_v99', // <--- ¡CAMBIA ESTO! Ponle v99 o lo que quieras
-          'Recordatorios de Riego', // Nombre visible en ajustes
+          'plant_care_channel_v99', 
+          'Recordatorios de Riego', 
           channelDescription: 'Canal para recordatorios de cuidado de plantas',
-          importance: Importance.max, // ¡IMPORTANTE!
-          priority: Priority.high,    // ¡IMPORTANTE!
-          playSound: true,            // Asegura que suene
+          importance: Importance.max, 
+          priority: Priority.high,   
+          playSound: true,            
         ),
       ),
 
@@ -164,8 +160,8 @@ class NotificationService {
       'test_channel_id', // ID diferente para probar
       'Canal de Prueba',
       channelDescription: 'Este canal es para probar que las alertas funcionan',
-      importance: Importance.max, // ¡IMPORTANCIA MÁXIMA!
-      priority: Priority.high,    // ¡PRIORIDAD ALTA!
+      importance: Importance.max, 
+      priority: Priority.high,   
       ticker: 'ticker',
     );
 

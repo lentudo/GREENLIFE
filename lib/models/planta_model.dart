@@ -6,10 +6,10 @@ class PlantaModel {
   final String nombre;
   final String tipo;      // Especie o tipo
   final String ubicacion; // Texto descriptivo (Ej: "Sala")
-  final String imagenUrl; // FOTO DE LA PLANTA (Fase 2)
+  final String imagenUrl; // FOTO DE LA PLANTA 
   final int frecuenciaRiego; // Días
   final DateTime ultimoRiego;
-  final GeoPoint? coordenadas; // Para Google Maps (Fase 4)
+  final GeoPoint? coordenadas; // Para Google Maps
   final DateTime creadoEn;
 
   PlantaModel({

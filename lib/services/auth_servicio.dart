@@ -33,7 +33,7 @@ class AuthService {
           correo: correo,
           rol: 'user', // Por defecto, es un usuario normal
           creadoEn: DateTime.now(),
-          tokenNotificacion: null, // Se asignará más tarde con Notificaciones
+          tokenNotificacion: null,
         );
 
         // 3. Guardar el usuario en Firestore (U4)

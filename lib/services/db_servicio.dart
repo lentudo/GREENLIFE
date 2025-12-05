@@ -41,7 +41,7 @@ class DBService {
   // -------------------------
   Future<bool> agregarPlanta(PlantaModel planta) async {
     try {
-      // Usamos el ID de la planta (generado previamente) como ID del documento
+     
       await _firestore
           .collection('plantas')
           .doc(planta.id)
@@ -53,10 +53,8 @@ class DBService {
     }
   }
 
-  // -------------------------
-  // 3. OBTENER PLANTAS (Firestore - Tiempo Real)
-  // -------------------------
-  // Escucha cambios en la DB. Si agregas una planta, la lista se actualiza sola.
+
+
   Stream<List<PlantaModel>> obtenerPlantasUsuario(String usuarioId) {
     return _firestore
         .collection('plantas')
@@ -70,10 +68,7 @@ class DBService {
     });
   }
 
-  // -------------------------
-  // 4. OBTENER TODAS LAS PLANTAS (Para el Mapa - Fase 4)
-  // -------------------------
-  // Esta función servirá para ver las plantas de la comunidad
+
   Future<List<PlantaModel>> obtenerTodasLasPlantas() async {
     try {
       QuerySnapshot snapshot = await _firestore
@@ -94,9 +89,7 @@ class DBService {
   // -------------------------
   Future<List<UsuarioModel>> obtenerTodosLosUsuarios() async {
     try {
-      // NOTA: Quitamos el orderBy('creadoEn') de la query para evitar
-      // tener que crear un índice compuesto en Firebase Console.
-      // Ordenaremos la lista en memoria (Dart) después de recibirla.
+
       QuerySnapshot snapshot = await _firestore
           .collection('users')
           .where('rol', isEqualTo: 'user')
@@ -107,7 +100,6 @@ class DBService {
         return UsuarioModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
       }).toList();
 
-      // Ordenar en memoria: más recientes primero
       usuarios.sort((a, b) => b.creadoEn.compareTo(a.creadoEn));
 
       return usuarios;

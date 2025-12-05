@@ -94,16 +94,15 @@ class _AdminUserPostsScreenState extends State<AdminUserPostsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (planta.imagenUrl != null)
-                      ClipRRect(
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                        child: Image.network(
-                          planta.imagenUrl!,
-                          height: 200,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        ),
+                    ClipRRect(
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                      child: Image.network(
+                        planta.imagenUrl,
+                        height: 200,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
                       ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(

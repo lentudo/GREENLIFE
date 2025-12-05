@@ -56,7 +56,7 @@ class _DetallePlantaScreenState extends State<DetallePlantaScreen> {
       print("⏩ Continuamos con la notificación aunque no haya internet...");
     }
 
-    // --- 2. NOTIFICACIÓN (Esto SÍ debe funcionar) ---
+    // --- 2. NOTIFICACIÓN ---
     try {
       final proximoRiegoDate = nuevoRiego.add(Duration(days: _planta.frecuenciaRiego));
 
@@ -79,7 +79,7 @@ class _DetallePlantaScreenState extends State<DetallePlantaScreen> {
         SnackBar(content: Text('Error notif: $e')),
       );
     } finally {
-      // Actualizamos la UI localmente aunque Firebase haya fallado
+      
       setState(() {
         _planta = PlantaModel(
           id: _planta.id,

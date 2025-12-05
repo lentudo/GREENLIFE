@@ -35,7 +35,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   void _cerrarSesion() async {
     await _authService.signOut();
-    // AuthGuardian se encargará de redirigir
+   
   }
 
   void _eliminarUsuario(UsuarioModel usuario) async {

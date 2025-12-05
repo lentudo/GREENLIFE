@@ -19,7 +19,7 @@ class _BuscarViverosScreenState extends State<BuscarViverosScreen> {
   List<dynamic> _places = [];
   final PageController _pageController = PageController(viewportFraction: 0.8);
 
-  // ¡IMPORTANTE! Reemplaza esto con tu API Key real
+ 
   final String _googleApiKey = 'AIzaSyBkdiawA2C1j8rS6Mc0eccRd9dcURvcAXQ';
 
   @override
